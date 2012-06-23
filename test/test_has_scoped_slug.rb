@@ -5,7 +5,7 @@ require 'rubygems'
 require 'active_record'
 
 # require the slug stuff
-require "#{File.dirname(__FILE__)}/../init"
+require "#{File.dirname(__FILE__)}/../lib/has_scoped_slug.rb"
 
 # setup test database
 ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")

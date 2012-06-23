@@ -75,19 +75,23 @@ module ActiveRecord
 
         # Returns a model based on the slug parameters as given by get_params
         def find_by_params(params)
-          slug = params[class_name.underscore.to_sym]
+          puts "PARAMS: #{params.inspect}"
+          puts "CLASS: #{self.name}"
+          slug = params[self.name.underscore.to_sym]
+          puts "SLUG: #{slug}"
 
           # no scope
           if slug_scope.nil?
-              return self.find :first, :conditions => ["#{slug_column} = ?", slug]
+            return self.find :first, :conditions => ["#{slug_column} = ?", slug]
           # with association scope
           elsif slug_scope.to_s =~ /^(.*)_id$/
             # TODO use joins
             parent_klass = ($1).classify.constantize
-            parent = parent_klass.find_by_slug(params)
+            parent = parent_klass.find_by_params(params)
             if slug.nil?
+              puts "SLUG IS NIL"
               # guess  parent accessor
-              parent_accessor = self.class_name.pluralize.underscore
+              parent_accessor = self.class.name.pluralize.underscore
               return parent.send(parent_accessor).first if parent.respond_to?(parent_accessor)
               return self.find :first, :conditions => ["#{slug_scope} = ?", parent.id]
             else
@@ -95,6 +99,10 @@ module ActiveRecord
             end
           # value scope
           else
+            if slug.nil?
+              # TODO test this case
+              return self.find :first, :conditions => ["#{slug_scope} = ?", params[slug_scope]]
+            end
             return self.find :first, :conditions => ["#{slug_column} = ? AND #{slug_scope} = ?", slug, params[slug_scope]]
           end
         end
@@ -115,7 +123,7 @@ module ActiveRecord
               result[slug_scope.to_sym] = self.send slug_scope
             end
           end
-          result["#{self.class.class_name.underscore}".to_sym] = slug
+          result["#{self.class.name.underscore}".to_sym] = slug
           result
         end
         alias_method :get_url_parameters, :get_params
@@ -157,3 +165,5 @@ module ActiveRecord
     end
   end
 end
+
+ActiveRecord::Base.class_eval { include ActiveRecord::Has::ScopedSlug }
