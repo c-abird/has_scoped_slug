@@ -4,33 +4,23 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{has_scoped_slug}
+  s.name = "has_scoped_slug"
   s.version = "0.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Claas Abert"]
-  s.date = %q{2011-05-15}
-  s.email = %q{}
+  s.date = "2012-06-23"
+  s.email = "claas@cabird.de"
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
   ]
   s.files = [
-    ".document",
-    "Gemfile",
-    "LICENSE.txt",
-    "README.rdoc",
-    "Rakefile",
-    "VERSION",
-    "lib/has_scoped_slug.rb",
-    "test/helper.rb",
-    "test/test_has_scoped_slug.rb"
+    "lib/has_scoped_slug.rb"
   ]
-  s.homepage = %q{http://github.com/c-abird/has_scoped_slug}
-  s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.2}
-  s.summary = nil
+  s.rubygems_version = "1.8.10"
+  s.summary = "Description of your gem"
   s.test_files = [
     "test/helper.rb",
     "test/test_has_scoped_slug.rb"
